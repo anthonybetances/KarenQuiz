@@ -105,7 +105,13 @@ function nameGen (e){
   let namePlace = document.querySelectorAll(".place:checked")[0].value;
   let nameCall = document.querySelectorAll(".call:checked")[0].value;
   let nameOutfit = document.querySelectorAll(".outfit:checked")[0].value;
-  let nameCity = document.querySelectorAll(".city:checked")[0].value;
+  let nameCity = document.querySelectorAll(".city:checked")[0].value
+  let techText = document.querySelectorAll(".tech:checked")[0].parentElement.children[1].innerText;
+  let placeText = document.querySelectorAll(".place:checked")[0].parentElement.children[1].innerText;
+  let callText = document.querySelectorAll(".call:checked")[0].parentElement.children[1].innerText;
+  let outfitText = document.querySelectorAll(".outfit:checked")[0].parentElement.children[1].innerText;
+  let cityText = document.querySelectorAll(".city:checked")[0].parentElement.children[1].innerText;
+  
 
   class Choices {
     constructor(tech, place, call, outfit, city){
@@ -124,6 +130,26 @@ function nameGen (e){
   })
   console.log(checkResult(total))
   document.querySelector("span").textContent = checkResult(total);
+
+  fetch('messages', {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              'tech': techText,
+              'place': placeText,
+              'call': callText,
+              'outfit': outfitText,
+              'city': cityText
+            })
+          })
+          .then(response => {
+            if (response.ok) return response.json()
+          })
+          .then(data => {
+            console.log(data)
+            window.location.reload(true)
+          })
+
 }
 
   function checkResult(total){

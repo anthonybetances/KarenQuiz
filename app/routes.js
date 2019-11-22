@@ -10,11 +10,26 @@ module.exports = function(app, passport, db) {
     // PROFILE SECTION =========================
 
     app.get('/profile', isLoggedIn, function(req, res) {
-        db.collection('messages').find().toArray((err, result) => {
+        db.collection('quizResults').find().toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
             user : req.user,
             messages: result
+          })
+        })
+    });
+
+    app.get('/results', isLoggedIn, function(req, res) {
+        db.collection('quizResults').find({user: req.user.local.email}).toArray((err, result) => {
+          console.log(req.body, "zoidberg", result)
+          if (err) return console.log(err)
+          res.render('results.ejs', {
+            results: result
+            // tech: result.tech,
+            // place: result.place,
+            // call: result.call,
+            // outfit: result.outfit,
+            // city: result.city
           })
         })
     });
@@ -37,18 +52,26 @@ module.exports = function(app, passport, db) {
 // message board routes ===============================================================
 
     app.post('/messages', (req, res) => {
-      db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+      // console.log(req.user)
+      db.collection('quizResults').save({
+        user: req.user.local.email,
+        tech: req.body.tech,
+        place: req.body.place,
+        call: req.body.call,
+        outfit: req.body.outfit,
+        city: req.body.city,
+        answer: req.body.answer}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
-        res.redirect('/profile')
+        res.redirect('/results')
       })
     })
 
     app.put('/messages', (req, res) => {
-      db.collection('messages')
-      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+      db.collection('quizResults')
+      .findOneAndUpdate({tech: req.body.tech, place: req.body.place, call: req.body.call, outfit: req.body.outfit, city: req.body.city}, {
         $set: {
-          thumbUp:req.body.thumbUp + 1
+          // thumbUp:req.body.thumbUp + 1
         }
       }, {
         sort: {_id: -1},
