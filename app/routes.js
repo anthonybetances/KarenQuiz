@@ -21,7 +21,7 @@ module.exports = function(app, passport, db) {
 
     app.get('/results', isLoggedIn, function(req, res) {
         db.collection('quizResults').find({user: req.user.local.email}).toArray((err, result) => {
-          console.log(req.body, "zoidberg", result)
+          console.log(req.body, result)
           if (err) return console.log(err)
           res.render('results.ejs', {
             results: result
@@ -60,33 +60,42 @@ module.exports = function(app, passport, db) {
         call: req.body.call,
         outfit: req.body.outfit,
         city: req.body.city,
-        answer: req.body.answer}, (err, result) => {
+        total: req.body.total
+      },
+      (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect('/results')
       })
     })
 
-    app.put('/messages', (req, res) => {
-      db.collection('quizResults')
-      .findOneAndUpdate({tech: req.body.tech, place: req.body.place, call: req.body.call, outfit: req.body.outfit, city: req.body.city}, {
-        $set: {
-          // thumbUp:req.body.thumbUp + 1
-        }
-      }, {
-        sort: {_id: -1},
-        upsert: true
-      }, (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
-      })
-    })
+    // app.put('/messages', (req, res) => {
+    //   db.collection('quizResults')
+    //   .findOneAndUpdate({
+    //     tech: req.body.tech,
+    //     place: req.body.place,
+    //     call: req.body.call,
+    //     outfit: req.body.outfit,
+    //     city: req.body.city,
+    //     total: req.body.total
+    //   }, {
+    //     $set: {
+    //       // thumbUp:req.body.thumbUp + 1
+    //     }
+    //   }, {
+    //     sort: {_id: -1},
+    //     upsert: true
+    //   }, (err, result) => {
+    //     if (err) return res.send(err)
+    //     res.send(result)
+    //   })
+    // })
 
     app.put('/messagesAlt', (req, res) => {
   db.collection('messages')
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     $set: {
-      thumbUp:req.body.thumbUp - 1
+      // thumbUp:req.body.thumbUp - 1
     }
   }, {
     sort: {_id: -1},

@@ -5,27 +5,24 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="container">
 
     <div class="page-header text-center">
-        <h1>RESULTS Page</h1>
+        <h1>The Karen Quiz</h1>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 
         <form action="/profile" method="put">
-          <h1>The Karen Quiz</h1>
+          <h1><%= results[results.length-1].user %> 's Oppressive Name</h1>
           <h2>Take the quiz to earn your entitled oppressor name!</h2>
           <section>
             <p>1. What's your favorite piece of tech?</p>
             <div>
               <!-- <h2><%= JSON.stringify(results) %></h2> -->
               <h2><%= results[results.length-1].tech %></h2>
-
-
-
-
             </div>
           </section>
           <section>
@@ -51,10 +48,10 @@
             <div><h2><%= results[results.length-1].city %></h2>
             </div>
           </section>
-          
+
         </form>
 
-          <h2>Results:   <span>
+          <h2>Results: <%= results[results.length-1].total %>  <span>
 
 
 

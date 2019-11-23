@@ -1,7 +1,16 @@
-body{
+  body{
   padding-top:80px;
   word-wrap:break-word;
+  background-color: rgb(252, 90, 3)
 }
 img{
   height: 200px;
+}
+button, .btn{
+  background-color: rgb(43, 204, 192)
+}
+
+h1, h2, h3{
+    font-family: 'Permanent Marker', cursive;
+  }
 }

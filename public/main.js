@@ -111,7 +111,7 @@ function nameGen (e){
   let callText = document.querySelectorAll(".call:checked")[0].parentElement.children[1].innerText;
   let outfitText = document.querySelectorAll(".outfit:checked")[0].parentElement.children[1].innerText;
   let cityText = document.querySelectorAll(".city:checked")[0].parentElement.children[1].innerText;
-  
+
 
   class Choices {
     constructor(tech, place, call, outfit, city){
@@ -128,26 +128,28 @@ function nameGen (e){
   Object.values(newName).forEach(num => {
     total = total+num;
   })
-  console.log(checkResult(total))
+  //console.log(checkResult(total))
   document.querySelector("span").textContent = checkResult(total);
 
   fetch('messages', {
             method: 'post',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json',
+          'Accept': 'application/json'},
             body: JSON.stringify({
               'tech': techText,
               'place': placeText,
               'call': callText,
               'outfit': outfitText,
-              'city': cityText
+              'city': cityText,
+              'total': checkResult(total)
             })
           })
           .then(response => {
-            if (response.ok) return response.json()
+            //if (response.ok) return response.json()
           })
           .then(data => {
-            console.log(data)
-            window.location.reload(true)
+            //console.log("works")
+            window.location.pathname = '/results'
           })
 
 }
