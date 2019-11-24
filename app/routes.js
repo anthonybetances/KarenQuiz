@@ -25,23 +25,9 @@ module.exports = function(app, passport, db) {
           if (err) return console.log(err)
           res.render('results.ejs', {
             results: result
-            // tech: result.tech,
-            // place: result.place,
-            // call: result.call,
-            // outfit: result.outfit,
-            // city: result.city
           })
         })
     });
-
-    // app.put('/profile', function(req, res) {
-    //   db.collection('quizResults').save({tech: req.body.name, place: req.body.place, call: req.body.call, outfit: req.body.outfit, city: req.body.city}, err, result => {
-    //     if (err) return console.log(err)
-    //     console.log('saved to database')
-    //     // res.redirect('/profile')
-    //   })
-    // })
-
 
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
@@ -69,27 +55,6 @@ module.exports = function(app, passport, db) {
       })
     })
 
-    // app.put('/messages', (req, res) => {
-    //   db.collection('quizResults')
-    //   .findOneAndUpdate({
-    //     tech: req.body.tech,
-    //     place: req.body.place,
-    //     call: req.body.call,
-    //     outfit: req.body.outfit,
-    //     city: req.body.city,
-    //     total: req.body.total
-    //   }, {
-    //     $set: {
-    //       // thumbUp:req.body.thumbUp + 1
-    //     }
-    //   }, {
-    //     sort: {_id: -1},
-    //     upsert: true
-    //   }, (err, result) => {
-    //     if (err) return res.send(err)
-    //     res.send(result)
-    //   })
-    // })
 
     app.put('/messagesAlt', (req, res) => {
   db.collection('messages')
